@@ -1,0 +1,17 @@
+﻿@model FribergCarRentals.Models.Booking
+
+@{
+    ViewData["Title"] = "Bokning bekräftad";
+}
+
+<h2>Bokning bekräftad!</h2>
+
+<p>Tack för din bokning!</p>
+
+<ul>
+    <li><strong>Bil:</strong> @Model.Car.Brand @Model.Car.Model</li>
+    <li><strong>Från:</strong> @Model.StartDate.ToShortDateString()</li>
+    <li><strong>Till:</strong> @Model.EndDate.ToShortDateString()</li>
+</ul>
+
+<a asp-controller="Bookings" asp-action="Index">Till mina bokningar</a>

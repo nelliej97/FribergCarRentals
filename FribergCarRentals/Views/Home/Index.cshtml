@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Startsida";
+    var isAdmin = User.IsInRole("Admin");
+    var isLoggedIn = User.Identity.IsAuthenticated;
+}
+
+@if (isAdmin)
+{
+    <h2>Adminpanel</h2>
+    <ul>
+        <li>Bilar i systemet: @ViewData["CarCount"]</li>
+        <li>Bokningar: @ViewData["BookingCount"]</li>
+        <li>Kunder: @ViewData["CustomerCount"]</li>
+    </ul>
+}
+else if (isLoggedIn)
+{
+    <div class="text-center mt-5">
+        <img src="~/images/logo.png" alt="Friberg Car Rentals logga" style="max-width: 250px;" />
+        <h2 class="mt-4">Välkommen!</h2>
+        <a class="btn btn-primary btn-lg mt-2" asp-controller="Bookings" asp-action="Create">Boka en bil</a>
+    </div>
+}
+else
+{
+    <div class="text-center mt-5">
+        <img src="~/images/logo.png" alt="Friberg Car Rentals logga" style="max-width: 250px;" />
+        <h2 class="mt-4">Välkommen!</h2>
+        <a class="btn btn-primary btn-lg mt-2" asp-area="Identity" asp-page="/Account/Login">Logga in för att boka bil</a>
+    </div>
+}

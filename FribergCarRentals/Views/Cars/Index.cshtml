@@ -1,0 +1,61 @@
+﻿@model IEnumerable<FribergCarRentals.Models.Car>
+
+@using Microsoft.AspNetCore.Identity
+@{
+    ViewData["Title"] = "Bilar";
+    var isAdmin = User.IsInRole("Admin");
+}
+
+<h1>Bilar</h1>
+
+@if (isAdmin)
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Lägg till bil</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Brand)</th>
+            <th>@Html.DisplayNameFor(model => model.Model)</th>
+            <th>@Html.DisplayNameFor(model => model.Color)</th>
+            <th>@Html.DisplayNameFor(model => model.IsAvailable)</th>
+            <th>Bild</th>
+            <th>Åtgärder</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Brand)</td>
+                <td>@Html.DisplayFor(modelItem => item.Model)</td>
+                <td>@Html.DisplayFor(modelItem => item.Color)</td>
+                <td>@Html.DisplayFor(modelItem => item.IsAvailable)</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@item.ImageUrl" alt="Bilbild" width="150" />
+                    }
+                </td>
+                <td>
+                    @if (isAdmin)
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id">Redigera</a>
+                        <text> | </text>
+                    }
+
+                    <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a>
+
+                    @if (isAdmin)
+                    {
+                        <text> | </text>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Ta bort</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,48 @@
+﻿@model IEnumerable<FribergCarRentals.Models.Customer>
+@{
+    ViewData["Title"] = "Kunder";
+    var isAdmin = User.IsInRole("Admin");
+}
+
+<h1>Kunder</h1>
+
+@if (isAdmin)
+{
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Skapa ny kund</a>
+    </p>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Förnamn</th>
+            <th>Efternamn</th>
+            <th>Telefonnummer</th>
+            <th>E-post</th>
+            @if (isAdmin)
+            {
+                <th>Åtgärder</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.FirstName</td>
+                <td>@item.LastName</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Email</td>
+                @if (isAdmin)
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Redigera</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Detaljer</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Ta bort</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
